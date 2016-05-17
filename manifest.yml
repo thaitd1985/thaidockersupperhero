@@ -2,6 +2,8 @@
 applications:
   - name: thaidockersupperhero
     buildpack: java_buildpack
+    env:
+      JBP_CONFIG_OPEN_JDK_JRE: '{jre: { version: 1.8.0_+ }}'
     path: build/libs/thaisupperhero-0.0.1-SNAPSHOT.jar
     services:
       - thai-docker-mongodb
