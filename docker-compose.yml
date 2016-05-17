@@ -1,0 +1,39 @@
+  
+# thai-mongodb:
+#   image: mongodb
+#   restart: always
+#   ports:
+#     - "27017:27017"
+
+# mongodata:  
+#   image: mongo:3.0.4
+#   volumes:
+#     - /data/db
+#   command: --break-mongo
+# mongo:  
+#   image: mongo:3.0.4
+#   volumes_from:
+#     - mongodata
+#   ports:
+#     - "27017:27017"
+#   command: "--smallfiles --logpath=/dev/null"
+#   # command: --smallfiles --rest --auth
+
+mongo:
+ image: mongo
+ restart: always
+ volumes:
+   - "data/db:/data/db"
+ ports:
+   - "27017:27017"
+ command: "--smallfiles --logpath=/dev/null"
+
+thaisupperhero:
+ image: thai/thaisupperhero
+ restart: always
+ volumes:
+   - $PWD/logs:/logs
+ ports:
+   - "8080:8080"
+ links:
+   - mongo

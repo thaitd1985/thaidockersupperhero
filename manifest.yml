@@ -1,0 +1,7 @@
+---
+applications:
+  - name: thaidockersupperhero
+    buildpack: java_buildpack
+    path: build/libs/thaisupperhero-0.0.1-SNAPSHOT.jar
+    services:
+      - thai-docker-mongodb

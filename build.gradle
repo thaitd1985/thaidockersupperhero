@@ -1,0 +1,72 @@
+buildscript {
+	ext {
+		springBootVersion = '1.3.5.RELEASE'
+//		springBootVersion = '1.2.2.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+		jcenter()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath 'se.transmode.gradle:gradle-docker:1.2'
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+apply plugin: 'application'
+apply plugin: 'docker'
+
+jar {
+	baseName = 'thaisupperhero'
+	version = '0.0.1-SNAPSHOT'
+}
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+group = 'thai'
+repositories {
+	mavenCentral()
+}
+
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter')
+	compile('org.springframework.boot:spring-boot-starter-data-mongodb')
+	compile('org.springframework.data:spring-data-rest-hal-browser')
+	compile('org.springframework.boot:spring-boot-starter-hateoas')
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.springframework.boot:spring-boot-starter-ws')
+	testCompile('org.springframework.boot:spring-boot-starter-test') 
+}
+
+//task buildDocker(type: Docker, dependsOn: build) {
+//	push = true
+//	applicationName = jar.baseName
+//	dockerfile = file('build/docker/Dockerfile')
+//	doFirst {
+//		copy {
+//			from jar
+//			into stageDir
+//		}
+//	}
+//}
+
+distDocker {
+	exposePort 8080
+	setEnvironment 'JAVA_OPTS', '-Dspring.profiles.active=docker'
+}
+
+docker {
+	maintainer = 'Thai Tran <thaitd1985@gmail.com>'
+	baseImage = 'java:8'
+}
+
+//eclipse {
+//	classpath {
+//		 containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
+//		 containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8'
+//	}
+//}
