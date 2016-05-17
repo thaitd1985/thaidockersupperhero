@@ -20,6 +20,9 @@ public class SupperHero {
 
     private Date firstAppearance = new Date();
 
+    //Test auto deploy by add new field
+    private Integer age;
+
     public String getId() {
         return id;
     }
@@ -78,5 +81,11 @@ public class SupperHero {
         return (Date) this.firstAppearance.clone();
     }
 
+    public Integer getAge() {
+        return age;
+    }
 
+    public void setAge(Integer age) {
+        this.age = age;
+    }
 }
